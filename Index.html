@@ -1,0 +1,189 @@
+﻿<!DOCTYPE html>
+<style>
+    .cards-list {
+        z-index: 0;
+        width: 100%;
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+    }
+
+    .card {
+        margin: 30px auto;
+        width: 300px;
+        height: 300px;
+        border-radius: 40px;
+        cursor: pointer;
+        transition: 0.4s;
+    }
+
+        .card .card_image {
+            width: inherit;
+            height: inherit;
+            border-radius: 40px;
+        }
+
+            .card .card_image img {
+                width: inherit;
+                height: inherit;
+                border-radius: 40px;
+                object-fit: cover;
+            }
+
+        .card .card_title {
+            text-align: center;
+            border-radius: 0px 0px 0px 40px;
+            font-family: sans-serif;
+            font-weight: bold;
+            font-size: 30px;
+            margin-top: -200px;
+            height: 40px;
+            color:deeppink
+        }
+
+        .card:hover {
+            transform: scale(0.9, 0.9);
+            box-shadow: 5px 5px 30px 15px rgba(0,0,0,0.25), -5px -5px 30px 15px rgba(0,0,0,0.22);
+        }
+
+    .title-white {
+        color: white;
+    }
+
+    .title-black {
+        color: black;
+    }
+
+    @media all and (max-width: 500px) {
+        .card-list {
+            /* On small screens, we are no longer using row direction but column */
+            flex-direction: column;
+        }
+    }
+
+
+     
+ 
+</style>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <meta charset="utf-8" />
+    <title>Distribute</title>
+</head>
+<body>
+    <iframe src="https://free.timeanddate.com/clock/i8bb8puf/n423/fn6/fs16/fc9ff/tc000/ftb/bas2/bat1/bacfff/pa8/tt0/th2/ta1/tb4" frameborder="0" width="274" height="60"></iframe>
+<br/>
+    <input type="text" id="p1" value="Ajay" />
+    <input type="text" id="p2" value="Kishan" />
+    <input type="text" id="p3" value="Vimal" />
+    <input type="text" id="p4" value="Mayur" />
+    <input type="text" id="p5" value="" />
+    <input type="text" id="p6" value="" />
+    <input type="button" id="btnSubmit" value="Distribute" onclick="distribute()" />
+
+
+    <div>
+
+        <div class="cards-list" id="cardList">
+  
+<!--<div class="card 1">
+  <div class="card_image"> <img src="https://i.redd.it/b3esnz5ra34y.jpg" /> </div>
+  <div class="card_title title-white">
+    <p>Card Title</p>
+  </div>
+</div>
+
+  <div class="card 2">
+  <div class="card_image">
+    <img src="https://cdn.blackmilkclothing.com/media/wysiwyg/Wallpapers/PhoneWallpapers_FloralCoral.jpg" />
+    </div>
+  <div class="card_title title-white">
+    <p>Card Title</p>
+  </div>
+</div>
+
+<div class="card 3">
+  <div class="card_image">
+    <img src="https://media.giphy.com/media/10SvWCbt1ytWCc/giphy.gif" />
+  </div>
+  <div class="card_title">
+    <p>Card Title</p>
+  </div>
+</div>
+  
+  <div class="card 4">
+  <div class="card_image">
+    <img src="https://media.giphy.com/media/LwIyvaNcnzsD6/giphy.gif" />
+    </div>
+  <div class="card_title title-black">
+    <p> val</p>
+  </div>
+  </div>-->
+
+</div>
+
+    </div>
+</body>
+</html>
+
+<script type="text/javascript">
+    $(function () {
+  
+    });
+
+    function distribute() {
+       var array = [];
+       array.push($("#p1").val().trim());
+       array.push($("#p2").val().trim());
+       array.push($("#p3").val().trim());
+       array.push($("#p4").val().trim());
+       array.push($("#p5").val().trim());
+       array.push($("#p6").val().trim());
+
+
+        var filtered = array.filter(function (el) {
+            return el != "";
+        });
+
+        var result = distributeIt(filtered); // get result 
+        //print it to card
+        if (result != null && result.length > 0) {
+                $("#cardList").html('');
+            for (var i = 0; i < result.length; i++) {
+                $("#cardList").append('<div class="card ' + [i] + '"><div class="card_image"> <img src="https://cdn.pixabay.com/photo/2016/07/20/19/36/stickies-1531100_1280.png" /> </div><div class="card_title title-white"><p>' + result[0, i].toString() + ' </p></div></div>');
+            }
+        }
+    }
+    
+    function distributeIt(players) {
+        if (players.length < 2) {
+            alert("Provide atleast 2 Players");
+            return null
+        }
+        target = [];
+        n = players.length;
+        //depthToPick =6;
+        depthToPick = n;
+        array = Array.from({ length: depthToPick + 1 }, (v, k) => k * 1);
+        array.shift(); // to remove 0 value fro array 
+        var T1shuffled = array.sort(function () { return (.5 - Math.random()) });
+        console.log(T1shuffled);
+        var T1selected = T1shuffled.slice(0, n);
+
+
+        var T2shuffled = array.sort(function () { return (.5 - Math.random()) });
+        console.log(T2shuffled);
+        var T2selected = T2shuffled.slice(0, n);
+
+        for (var i = 0; i < players.length; i++) {
+            target.push([players[i].toString() + '\n', "&#10; F" + T1selected[i].toString(), "S" + T2selected[i].toString()]);
+        }
+        console.log(target);
+        return target;
+ 
+    }
+
+
+</script>
