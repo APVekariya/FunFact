@@ -12,9 +12,10 @@
         margin: 30px auto;
         width: 300px;
         height: 300px;
-        border-radius: 40px;
+        /*border-radius: 40px;*/
         cursor: pointer;
         transition: 0.4s;
+        border:none
     }
 
         .card .card_image {
@@ -35,7 +36,7 @@
             border-radius: 0px 0px 0px 40px;
             font-family: sans-serif;
             font-weight: bold;
-            font-size: 30px;
+            font-size: 25px;
             margin-top: -200px;
             height: 40px;
             color:deeppink
@@ -74,61 +75,95 @@
     <title>Distribute</title>
 </head>
 <body class=""  >
-     
-
     <iframe src="https://free.timeanddate.com/clock/i8bb8puf/n423/fn6/fs16/fc9ff/tc000/ftb/bas2/bat1/bacfff/pa8/tt0/th2/ta1/tb4" frameborder="0" width="274" height="60" style="margin: 0 auto;display:block"></iframe>
 
  <div class="col-sm-6 row" style="float:left;display:contents" >
-<div class="col-sm-12 mb-3">    <input  class="form-control form-control-sm w-25" type="text" id="p1" value="Ajay" /></div>
-<div class="col-sm-12 mb-3">    <input class="form-control form-control-sm w-25" type="text" id="p2" value="Kishan" /></div>
-<div class="col-sm-12 mb-3">    <input class="form-control form-control-sm w-25" type="text" id="p3" value="Vimal" /></div>
-<div class="col-sm-12 mb-3">    <input class="form-control form-control-sm w-25" type="text" id="p4" value="Mayur" /></div>
-<div class="col-sm-12 mb-3">    <input class="form-control form-control-sm w-25" type="text" id="p5" value="" /></div>
-<div class="col-sm-12 mb-3">    <input class="form-control form-control-sm w-25" type="text" id="p6" value="" /></div>
-<div class="col-sm-12 mb-3">    <input class="btn btn-warning w-25" type="button" id="btnSubmit" value="Distribute" onclick="distribute()" /></div>
-
- </div>
- <div class="col-sm-6" style="float:right">
-
-        <div class="cards-list" id="cardList">
-   
+    <div class="col-sm-12 mb-3">    <input  class="form-control form-control-sm w-25" type="text" id="p1" value="Ajay" /></div>
+    <div class="col-sm-12 mb-3">    <input class="form-control form-control-sm w-25" type="text" id="p2" value="Kishan" /></div>
+    <div class="col-sm-12 mb-3">    <input class="form-control form-control-sm w-25" type="text" id="p3" value="Vimal" /></div>
+    <div class="col-sm-12 mb-3">    <input class="form-control form-control-sm w-25" type="text" id="p4" value="Mayur" /></div>
+    <div class="col-sm-12 mb-3">    <input class="form-control form-control-sm w-25" type="text" id="p5" value="" /></div>
+    <div class="col-sm-12 mb-3">    <input class="form-control form-control-sm w-25" type="text" id="p6" value="" /></div>
+    <div class="col-sm-12 mb-3">    <input class="btn btn-warning w-25" type="button" id="btnSubmit" value="Distribute" onclick="distribute()" /></div>
 </div>
 
-    </div>
+ <div class="col-sm-6" style="float:right">
+    <div class="cards-list" id="cardList"></div>
+</div>
+
 </body>
 </html>
 
 <script type="text/javascript">
     $(function () {
-        $('#ucMatches').attr('src', 'https://www.espn.com/espnplus/collections/23396/cricket-live-upcoming/_/country/us/redirected/true');
- 
+        $("#btnSubmit").val('Distribute');
+
     });
 
     function distribute() {
-       var array = [];
-       array.push($("#p1").val().trim());
-       array.push($("#p2").val().trim());
-       array.push($("#p3").val().trim());
-       array.push($("#p4").val().trim());
-       array.push($("#p5").val().trim());
-       array.push($("#p6").val().trim());
+        var millisecondsToWait = 0;
+        $("#btnSubmit").val('Distributing...');
+
+
+        setTimeout(function () {
+     
+        var array = [];
+        array.push($("#p1").val().trim());
+        array.push($("#p2").val().trim());
+        array.push($("#p3").val().trim());
+        array.push($("#p4").val().trim());
+        array.push($("#p5").val().trim());
+        array.push($("#p6").val().trim());
 
 
         var filtered = array.filter(function (el) {
             return el != "";
         });
 
-        var result = distributeIt(filtered); // get result 
+        var result = distributeItV2(filtered); // get result
         //print it to card
         if (result != null && result.length > 0) {
-                $("#cardList").html('');
+            $("#cardList").html('');
             for (var i = 0; i < result.length; i++) {
                 $("#cardList").append('<div class="card ' + [i] + '"><div class="card_image"> <img src="https://cdn.pixabay.com/photo/2016/07/20/19/36/stickies-1531100_1280.png" /> </div><div class="card_title title-white"><p>' + result[0, i].toString() + ' </p></div></div>');
             }
-        }
+            }
+
+        }, millisecondsToWait);
+
+        $("#btnSubmit").val('Distribute');
     }
-    
-    function distributeIt(players) {
+
+    //function distributeIt(players) {
+    //    if (players.length < 2) {
+    //        alert("Provide atleast 2 Players");
+    //        return null
+    //    }
+    //    target = [];
+    //    n = players.length;
+    //    //depthToPick =6;
+    //    depthToPick = n;
+    //    array = Array.from({ length: depthToPick + 1 }, (v, k) => k * 1);
+    //    array.shift(); // to remove 0 value fro array 
+    //    var T1shuffled = array.sort(function () { return (.5 - Math.random()) });
+    //    console.log(T1shuffled);
+    //    var T1selected = T1shuffled.slice(0, n);
+
+
+    //    var T2shuffled = array.sort(function () { return (.5 - Math.random()) });
+    //    console.log(T2shuffled);
+    //    var T2selected = T2shuffled.slice(0, n);
+
+    //    for (var i = 0; i < players.length; i++) {
+    //        target.push([players[i].toString() + '\n', "&#10; F" + T1selected[i].toString(), "S" + T2selected[i].toString()]);
+    //    }
+    //    console.log(target);
+    //    return target;
+
+    //}
+
+
+    function distributeItV2(players) {
         if (players.length < 2) {
             alert("Provide atleast 2 Players");
             return null
@@ -137,23 +172,27 @@
         n = players.length;
         //depthToPick =6;
         depthToPick = n;
-        array = Array.from({ length: depthToPick + 1 }, (v, k) => k * 1);
-        array.shift(); // to remove 0 value fro array 
-        var T1shuffled = array.sort(function () { return (.5 - Math.random()) });
-        console.log(T1shuffled);
-        var T1selected = T1shuffled.slice(0, n);
 
+        mainArray = [];
+        debugger
+        T1 = Array.from({ length: depthToPick + 1 }, (v, k) => "F" + (k * 1));
+        T1.shift(); // to remove 0 value fro array
+        
+        T2 = Array.from({ length: depthToPick + 1 }, (v, k) => "S" + k * 1);
+        T2.shift(); // to remove 0 value fro array
+        
+        mainArray = T1.concat(T2);
+        var shuffled = mainArray.sort(function () { return (.5 - Math.random()) });
+        console.log(shuffled);
+        var selection = shuffled.slice(0, n * 2);
 
-        var T2shuffled = array.sort(function () { return (.5 - Math.random()) });
-        console.log(T2shuffled);
-        var T2selected = T2shuffled.slice(0, n);
-
+ 
         for (var i = 0; i < players.length; i++) {
-            target.push([players[i].toString() + '\n', "&#10; F" + T1selected[i].toString(), "S" + T2selected[i].toString()]);
+            target.push([players[i].toString() + '\n', "&#10; " + selection[i].toString(), selection[n + i].toString()]);
         }
         console.log(target);
         return target;
- 
+
     }
 
 
